@@ -436,7 +436,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -48.794, z: 0}
 --- !u!1 &330585543
 GameObject:
@@ -524,7 +524,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 10.28, z: -10.17}
+  m_LocalPosition: {x: 0, y: 10.28, z: -10.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -749,7 +749,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1 &534106634
 GameObject:
@@ -776,13 +776,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534106634}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.38234025, y: 0.06369424, z: -1.8593197}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 565197973}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &534106636
 MonoBehaviour:
@@ -808,10 +808,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680e9614f1635e540a4efd6d1f7c6246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainCamera: {fileID: 330585545}
   layerMask:
     serializedVersion: 2
     m_Bits: 704
+--- !u!1 &565197971
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 565197973}
+  - component: {fileID: 565197972}
+  m_Layer: 0
+  m_Name: Global game systems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &565197972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565197971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 851b1586cb6843542b5e8dbaec1834a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameInput: {fileID: 534106636}
+  mousePosition: {fileID: 534106637}
+  gunDroneAnchorPoint: {fileID: 1280066486}
+  mainCam: {fileID: 330585545}
+--- !u!4 &565197973
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 565197971}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 534106635}
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &692294241
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,7 +1122,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1861869493
 GameObject:
@@ -1218,7 +1266,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450652163328656
 Transform:
@@ -1370,7 +1418,7 @@ PrefabInstance:
     - target: {fileID: 4671958897117453289, guid: 628125e95080ad6448ca42a1234f3e6a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4671958897117453289, guid: 628125e95080ad6448ca42a1234f3e6a,
         type: 3}
@@ -1537,11 +1585,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c3a0f042de2c5641add94ab51199abb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunDroneAnchorPoint: {fileID: 1280066486}
   droneSpeed: 18
-  anchorOffset: 1.5
   droneRotSpeed: 50
-  mousePosition: {fileID: 534106637}
+  anchorOffset: {x: 0, y: 1.58, z: 0}
   aimDir: {x: 0, y: 0, z: 0}
 --- !u!114 &8907657249618944391
 MonoBehaviour:
@@ -1555,8 +1601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78d82449fdbacd744aadb2ae0549c7a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameInput: {fileID: 534106636}
-  mousePosition: {fileID: 534106637}
   targetLayer:
     serializedVersion: 2
     m_Bits: 640

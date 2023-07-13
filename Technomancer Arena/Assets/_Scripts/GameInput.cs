@@ -5,24 +5,42 @@ using System;
 
 public class GameInput : MonoBehaviour
 {
-    public event EventHandler OnAttack;
+    public delegate EventHandler[] playerAttack();
+    public event EventHandler OnPlayer1Attack;
+    public event EventHandler OnPlayer2Attack;
+
+    public MousePosition mousePosition;
 
     private PlayerInputActions playerInputActions;
 
     private void Awake(){
         playerInputActions = new PlayerInputActions();
-        playerInputActions.Player.Enable();
-        playerInputActions.Player.Attack.performed += Attack_performed;
+        playerInputActions.Player1.Enable();
+        playerInputActions.Player1.Attack.performed += Player1_Attack_performed;
+        playerInputActions.Player2.Enable();
+        playerInputActions.Player2.Attack.performed += Player2_Attack_performed;
     }
 
-    private void Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Player2_Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnAttack?.Invoke(this, EventArgs.Empty);
+        OnPlayer2Attack?.Invoke(this, EventArgs.Empty);
     }
 
-    public Vector2 GetMovementVectorNormalized(){
+    private void Player1_Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnPlayer1Attack?.Invoke(this, EventArgs.Empty);
+    }
 
-        Vector2 inputVector = playerInputActions.Player.Move.ReadValue<Vector2>();
+    public Vector2 GetKeyboardMovementVectorNormalized(){
+
+        Vector2 inputVector = playerInputActions.Player1.Move.ReadValue<Vector2>();
+
+        inputVector = inputVector.normalized;
+        return inputVector;
+    }
+    public Vector2 GetJoystickMovementVectorNormalized(){
+
+        Vector2 inputVector = playerInputActions.Player2.Move.ReadValue<Vector2>();
 
         inputVector = inputVector.normalized;
         return inputVector;

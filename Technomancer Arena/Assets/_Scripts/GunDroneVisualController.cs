@@ -18,7 +18,7 @@ public class GunDroneVisualController : MonoBehaviour
         equipedGunDroneSO = gunDroneManager.gunDroneSO[0];
         SpawnDrone(equipedGunDroneSO.droneVisual);
         gunDroneManager.OnShot += GunDroneManager_OnShot;
-        gameInput.OnAttack += GameInput_OnAttack;
+        gameInput.OnPlayer1Attack += GameInput_OnAttack;
         
     }
 

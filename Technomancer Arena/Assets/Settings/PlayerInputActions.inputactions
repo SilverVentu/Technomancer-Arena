@@ -2,7 +2,99 @@
     "name": "PlayerInputActions",
     "maps": [
         {
-            "name": "Player",
+            "name": "Player1",
+            "id": "fc0f65c7-3d44-4941-b606-becd07ebdd65",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "1f7fb716-922d-4cb2-8b3a-c2e5be213add",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "75276aae-efab-4efc-9f56-bd3f3b78fafa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "WASD",
+                    "id": "58b269d3-df49-46c2-9152-d1b97980493e",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "96549a56-b437-49da-b490-3d0262c3af57",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "911ba045-955f-4d5a-a27e-9679d70de372",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "6c9a256f-a697-48d9-be0a-f3a11f3484f2",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "61587720-3114-4009-8dbd-ab9122eace38",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "6a109710-112c-43bf-87d0-136ce2032bdf",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Player2",
             "id": "32e7c37a-e961-433a-b794-faafb2d26aca",
             "actions": [
                 {
@@ -26,7 +118,7 @@
             ],
             "bindings": [
                 {
-                    "name": "WASD",
+                    "name": "LeftStick",
                     "id": "85551b41-3588-44b3-a364-06f487f3afb2",
                     "path": "2DVector",
                     "interactions": "",
@@ -39,7 +131,7 @@
                 {
                     "name": "up",
                     "id": "e53e5536-38f9-4387-ae4c-fb0c58ec61b2",
-                    "path": "<Keyboard>/w",
+                    "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -50,7 +142,7 @@
                 {
                     "name": "down",
                     "id": "05169fa6-c0cd-4fe5-a0f9-5cfe0b1aa734",
-                    "path": "<Keyboard>/s",
+                    "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -61,7 +153,7 @@
                 {
                     "name": "left",
                     "id": "0f310cc7-6857-43e9-90e6-2a75018cce6c",
-                    "path": "<Keyboard>/a",
+                    "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -72,7 +164,7 @@
                 {
                     "name": "right",
                     "id": "6f6505f2-a8e5-430b-ac4b-1f6497534c7a",
-                    "path": "<Keyboard>/d",
+                    "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -83,7 +175,7 @@
                 {
                     "name": "",
                     "id": "cccf21aa-e4ac-479b-91cb-8cf4aac2e1e2",
-                    "path": "<Mouse>/leftButton",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -94,5 +186,16 @@
             ]
         }
     ],
-    "controlSchemes": []
+    "controlSchemes": [
+        {
+            "name": "keyboard",
+            "bindingGroup": "keyboard",
+            "devices": []
+        },
+        {
+            "name": "Joystick",
+            "bindingGroup": "Joystick",
+            "devices": []
+        }
+    ]
 }

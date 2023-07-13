@@ -8,11 +8,17 @@ public class PlayerManager : MonoBehaviour
 
     public static PlayerManager Instance { get; private set; }
 
+    [SerializeField] private int player;
     [SerializeField] private float health;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private GameInput gameInput;
+
     private bool isWalking;
     private Vector3 lastDirectionDir;
+
+    delegate Vector2 GetInput();
+
+    List<GetInput> getInput = new List<GetInput>();
 
     private void Awake()
     {
@@ -21,6 +27,8 @@ public class PlayerManager : MonoBehaviour
             Debug.LogError("There is more than one player instance");
         }
         Instance = this;
+        getInput.Add(gameInput.GetKeyboardMovementVectorNormalized);
+        getInput.Add(gameInput.GetJoystickMovementVectorNormalized);
     }
 
 
@@ -39,7 +47,7 @@ public class PlayerManager : MonoBehaviour
 
     private void HandleInteractions()
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = gameInput.GetJoystickMovementVectorNormalized();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
@@ -51,7 +59,7 @@ public class PlayerManager : MonoBehaviour
     }
     private void HandleMovement()
     {
-        Vector2 inputVector = gameInput.GetMovementVectorNormalized();
+        Vector2 inputVector = getInput[player]();
 
         Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 

@@ -6,11 +6,14 @@ using UnityEngine;
 
 public class GunDroneManager : MonoBehaviour
 {
-    [SerializeField] private GameInput gameInput;
-    [SerializeField] private MousePosition mousePosition;
     [SerializeField] private LayerMask targetLayer;
+
+
     private float fireRate;
-    private const string ENEMY = "Enemy";
+    private GameInput gameInput;
+    private MousePosition mousePosition;
+
+
     public GunDroneSO[] gunDroneSO;
 
     public event EventHandler<OnHitEventArgs> OnShot;
@@ -23,8 +26,9 @@ public class GunDroneManager : MonoBehaviour
 
     private void Start()
     {
-        
-        gameInput.OnAttack += GameInput_OnAttack;
+        gameInput = DATA.Instance.gameInput;
+        mousePosition = DATA.Instance.mousePosition;
+        gameInput.OnPlayer1Attack += GameInput_OnAttack;
         //target = enemyTarget.GetComponent<IHasHealth>();
     }
 
@@ -39,7 +43,7 @@ public class GunDroneManager : MonoBehaviour
         {
             if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, gunDroneSO[0].range, targetLayer))
             {
-                if (hit.transform.TryGetComponent<IHasHealth>(out IHasHealth target) /*&& mousePosition.GetGunPointerTransform().CompareTag(ENEMY)*/)
+                if (hit.transform.TryGetComponent<IHasHealth>(out IHasHealth target))
                 {
                     target.TakeDamage(gunDroneSO[0].damage);
                     OnShot?.Invoke(this, new OnHitEventArgs { hitPosition = hit.point});
