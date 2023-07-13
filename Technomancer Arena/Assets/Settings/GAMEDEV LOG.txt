@@ -1,0 +1,9 @@
+day-1: Setup the project and player movement
+day-2: Added GunDrone, its movement controller and aiming.
+Day-3: Created animation for the drone shooting and a provisory material
+Day-4: Created a script that manages the drone based on a scriptable object and
+	   make it deal damage to a specific target. Started to make the Bar system for all bars in game.
+Day-5: made the drone shoot enemies and deal damage to them. added outline material.
+Day-6: made the shooting more reliable and added visual feedback when shooting.
+Day-7: Added decals to the proyect and tweaked some materials
+
