@@ -35,7 +35,6 @@ public class PlayerManager : MonoBehaviour
     private void Update()
     {
         HandleMovement();
-        HandleInteractions();
     }
 
     public bool IsWalking()
@@ -45,18 +44,7 @@ public class PlayerManager : MonoBehaviour
 
 
 
-    private void HandleInteractions()
-    {
-        Vector2 inputVector = gameInput.GetJoystickMovementVectorNormalized();
-
-        Vector3 moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
-        if (moveDir != Vector3.zero)
-        {
-            lastDirectionDir = moveDir;
-        }
-
-    }
+   
     private void HandleMovement()
     {
         Vector2 inputVector = getInput[player]();

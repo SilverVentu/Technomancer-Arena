@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class GunDroneSO : ScriptableObject
 {
+    public string name;
     public GameObject droneVisual, hitFX;
     public float damage;
     public float fireRate;

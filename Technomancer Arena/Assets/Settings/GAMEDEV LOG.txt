@@ -6,4 +6,6 @@ Day-4: Created a script that manages the drone based on a scriptable object and
 Day-5: made the drone shoot enemies and deal damage to them. added outline material.
 Day-6: made the shooting more reliable and added visual feedback when shooting.
 Day-7: Added decals to the proyect and tweaked some materials
+Day-8: Refactored input script to support 2 players and refactored aiming script to work with mouse or gamepad.
+
 
