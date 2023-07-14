@@ -5,13 +5,13 @@ using System;
 
 public interface IHasHealth
 {
-    public event EventHandler<OnDamageTakenEventArgs> OnDamageTaken;
+    //public event EventHandler<OnDamageTakenEventArgs> OnDamageTaken;
 
 
-    public class OnDamageTakenEventArgs : EventArgs
+    /*public class OnDamageTakenEventArgs : EventArgs
     {
         public float DMG;
-    }
+    }*/
 
 
     public void TakeDamage(float DMG);

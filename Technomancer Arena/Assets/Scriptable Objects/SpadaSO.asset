@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 65e610527492433418d84ec4d0a26e88, type: 3}
-  m_Name: BaseDrone
+  m_Name: SpadaSO
   m_EditorClassIdentifier: 
-  droneVisual: {fileID: 2174805165324482141, guid: c28b987901b2d7c46bc8dc1d624f2935,
+  name: Spada
+  dronePrefab: {fileID: 1708325561984801307, guid: 47cfdb77384210d4585991d8a8ecebdb,
     type: 3}
   hitFX: {fileID: 8931728950246686793, guid: d61110a964ed82044b2c75faaf6c35fc, type: 3}
   damage: 20

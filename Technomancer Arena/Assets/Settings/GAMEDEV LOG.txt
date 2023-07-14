@@ -7,5 +7,7 @@ Day-5: made the drone shoot enemies and deal damage to them. added outline mater
 Day-6: made the shooting more reliable and added visual feedback when shooting.
 Day-7: Added decals to the proyect and tweaked some materials
 Day-8: Refactored input script to support 2 players and refactored aiming script to work with mouse or gamepad.
+Day-9: Refactored gun drone manager to spawn all the drones needed based in what drone the player has equiped.
+	   Added support to hurt other players.
 
 

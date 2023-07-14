@@ -63,7 +63,9 @@ Material:
     - _Fresnel_threshold: 0.621
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Texture_influence: 0.99
     m_Colors:
     - _DarkColor: {r: 0.7169812, g: 0.2588347, b: 0.02976145, a: 0}
     - _Light_Color: {r: 0.7924528, g: 0.48130137, b: 0.19736558, a: 0}
+    - _Tiling: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

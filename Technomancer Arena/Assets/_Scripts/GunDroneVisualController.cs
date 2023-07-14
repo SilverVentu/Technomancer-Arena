@@ -15,9 +15,9 @@ public class GunDroneVisualController : MonoBehaviour
     private void Start()
     {
         gunDroneManager = GetComponent<GunDroneManager>();
-        equipedGunDroneSO = gunDroneManager.gunDroneSO[0];
-        SpawnDrone(equipedGunDroneSO.droneVisual);
-        gunDroneManager.OnShot += GunDroneManager_OnShot;
+        //equipedGunDroneSO = gunDroneManager.gunDroneSO[0];
+        //SpawnDrone(equipedGunDroneSO.droneVisual);
+        //gunDroneManager.OnShot += GunDroneManager_OnShot;
         gameInput.OnPlayer1Attack += GameInput_OnAttack;
         
     }
@@ -36,7 +36,7 @@ public class GunDroneVisualController : MonoBehaviour
     }
 
 
-    private void SpawnDrone(GameObject drone)
+    /*private void SpawnDrone(GameObject drone)
     {
         GameObject gunDrone = Instantiate(drone, transform);
         gunDrone.transform.localPosition = new Vector3(0,0,-0.3f);
@@ -49,5 +49,5 @@ public class GunDroneVisualController : MonoBehaviour
         hitFX = Instantiate(equipedGunDroneSO.hitFX, Vector3.zero, Quaternion.identity);
         hitFXParticles = hitFX.GetComponent<ParticleSystem>();
         hitFXParticles.Pause();
-    }
+    }*/
 }

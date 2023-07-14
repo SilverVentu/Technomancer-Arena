@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class PlayerManager : MonoBehaviour
+public class PlayerManager : MonoBehaviour, IHasHealth
 {
 
     public static PlayerManager Instance { get; private set; }
@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float health;
     [SerializeField] private float moveSpeed = 7f;
     [SerializeField] private GameInput gameInput;
+    [SerializeField] private GunDroneOptions equipedGunDrone;
+    [SerializeField] private Transform gunDroneAnchorPoint;
 
     private bool isWalking;
     private Vector3 lastDirectionDir;
@@ -19,6 +21,9 @@ public class PlayerManager : MonoBehaviour
     delegate Vector2 GetInput();
 
     List<GetInput> getInput = new List<GetInput>();
+
+
+
 
     private void Awake()
     {
@@ -98,6 +103,26 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float DMG)
+    {
+        health -= DMG;
+    }
+
+
+    public enum GunDroneOptions
+    {
+        SPADA = 0, SCOPETA = 1,
+    }
+
+    public int GetEquipedDrone()
+    {
+        return (int)equipedGunDrone;
+    }
+
+    public Transform GetGunDroneAnchorPoint()
+    {
+        return gunDroneAnchorPoint;
+    }
 }
 
 
