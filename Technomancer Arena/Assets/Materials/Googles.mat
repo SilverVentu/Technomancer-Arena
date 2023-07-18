@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MainCharacter
+  m_Name: Googles
   m_Shader: {fileID: -6465566751694194690, guid: dd717fcec9e782e42a7eabce1773250b,
     type: 3}
   m_Parent: {fileID: 0}
@@ -41,6 +41,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: f6ee588ece2dafc4cac1db0c68019981, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -55,10 +59,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fresnel_threshold: 0.621
+    - _Float: 2.25
+    - _Fresnel_threshold: 0.751
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Texture_influence: 0.99
     m_Colors:
-    - _DarkColor: {r: 0.1509434, g: 0.1509434, b: 0.1509434, a: 0}
-    - _Light_Color: {r: 0.8867924, g: 0.8867924, b: 0.8867924, a: 0}
+    - _DarkColor: {r: 0.03773582, g: 0.009057256, b: 0.0069063646, a: 0}
+    - _Light_Color: {r: 0, g: 15.504105, b: 16, a: 0}
+    - _Tiling: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
