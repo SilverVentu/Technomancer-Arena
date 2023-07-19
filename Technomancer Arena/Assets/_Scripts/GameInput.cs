@@ -50,6 +50,13 @@ public class GameInput : MonoBehaviour
         inputVector = inputVector.normalized;
         return inputVector;
     }
+    public Vector2 GetJoystickAimDirectionVectorNormalized(){
+
+        Vector2 inputVector = playerInputActions.Player2.AimDirection.ReadValue<Vector2>();
+
+        //inputVector = inputVector.normalized;
+        return inputVector;
+    }
 
     private void Player1_Dash_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {

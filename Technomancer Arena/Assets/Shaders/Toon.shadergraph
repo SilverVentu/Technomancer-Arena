@@ -460,8 +460,8 @@
     },
     "m_FragmentContext": {
         "m_Position": {
-            "x": 571.9998779296875,
-            "y": 198.4000244140625
+            "x": 658.4000244140625,
+            "y": 222.39999389648438
         },
         "m_Blocks": [
             {
@@ -511,12 +511,6 @@
         "z": 0.0,
         "w": 0.0
     }
-}
-
-{
-    "m_SGVersion": 2,
-    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
-    "m_ObjectId": "02de2fe4857d42cb8baad1d23a009a82"
 }
 
 {
@@ -2598,6 +2592,12 @@
 }
 
 {
+    "m_SGVersion": 2,
+    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
+    "m_ObjectId": "b826a4ba5cb44a77ac8e387bfde7884b"
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicValueMaterialSlot",
     "m_ObjectId": "ba07e6c07ef24d64b5d6eb45f0be8fb2",
@@ -3220,7 +3220,7 @@
     "m_ObjectId": "e77cf94af4e549e3bea13bed99b2e2be",
     "m_Datas": [],
     "m_ActiveSubTarget": {
-        "m_Id": "02de2fe4857d42cb8baad1d23a009a82"
+        "m_Id": "b826a4ba5cb44a77ac8e387bfde7884b"
     },
     "m_AllowMaterialOverride": false,
     "m_SurfaceType": 0,

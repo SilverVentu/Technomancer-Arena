@@ -438,6 +438,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: -48.794, z: 0}
+--- !u!1 &316329130 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 90db46714b692ff439ce63a134a679d2,
+    type: 3}
+  m_PrefabInstance: {fileID: 2086552897}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
@@ -1125,6 +1131,27 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2086552897}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &980877162
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 316329130}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7614201578a7c0644abd2d96c39410a2, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1280066486 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5569634377823856161, guid: 02d3590c4e6f3ed4cbf05a37e5f7950c,
@@ -1297,12 +1324,12 @@ PrefabInstance:
     - target: {fileID: 7978954511545325921, guid: 02d3590c4e6f3ed4cbf05a37e5f7950c,
         type: 3}
       propertyPath: dashLenght
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7978954511545325921, guid: 02d3590c4e6f3ed4cbf05a37e5f7950c,
         type: 3}
       propertyPath: dashCooldown
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7978954511545325921, guid: 02d3590c4e6f3ed4cbf05a37e5f7950c,
         type: 3}
@@ -1635,7 +1662,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90db46714b692ff439ce63a134a679d2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 980877162}
   m_SourcePrefab: {fileID: 100100000, guid: 90db46714b692ff439ce63a134a679d2, type: 3}
 --- !u!1 &2097373407
 GameObject:
@@ -1996,12 +2027,12 @@ PrefabInstance:
     - target: {fileID: 7978954511545325921, guid: 02d3590c4e6f3ed4cbf05a37e5f7950c,
         type: 3}
       propertyPath: dashLenght
-      value: 8
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7978954511545325921, guid: 02d3590c4e6f3ed4cbf05a37e5f7950c,
         type: 3}
       propertyPath: dashCooldown
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7978954511545325921, guid: 02d3590c4e6f3ed4cbf05a37e5f7950c,
         type: 3}

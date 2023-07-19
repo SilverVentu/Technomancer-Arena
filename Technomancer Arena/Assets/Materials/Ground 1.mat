@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground
+  m_Name: Ground 1
   m_Shader: {fileID: -6465566751694194690, guid: dd717fcec9e782e42a7eabce1773250b,
     type: 3}
   m_Parent: {fileID: 0}
@@ -65,7 +65,7 @@ Material:
     - _QueueOffset: 0
     - _Texture_influence: 0.99
     m_Colors:
-    - _DarkColor: {r: 0.268582, g: 0.033952814, b: 0.116550945, a: 0}
+    - _DarkColor: {r: 0.7169812, g: 0.2588347, b: 0.02976145, a: 0}
     - _Light_Color: {r: 0.7924528, g: 0.48130137, b: 0.19736558, a: 0}
     - _Tiling: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
