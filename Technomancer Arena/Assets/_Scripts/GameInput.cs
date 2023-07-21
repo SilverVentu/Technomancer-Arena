@@ -76,5 +76,6 @@ public class GameInput : MonoBehaviour
     private void Player1_Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
         OnPlayer1Attack?.Invoke(this, EventArgs.Empty);
+        Debug.Log("pew");
     }
 }

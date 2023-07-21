@@ -17,9 +17,9 @@ TagManager:
   - HitFX
   - DashableObstacle
   - UndashableObstacle
-  - EnemyDrone
-  - 
-  - 
+  - EnemyDroid
+  - Player1
+  - Player2
   - 
   - 
   - 

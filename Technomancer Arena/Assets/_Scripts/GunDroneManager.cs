@@ -10,10 +10,6 @@ public class GunDroneManager : MonoBehaviour
     [SerializeField] private PlayerManager[] players;
     [SerializeField] private GunDroneSO[] gunDroneSO;    
 
-    public class OnHitEventArgs : EventArgs
-    {
-        public Vector3 hitPosition;
-    }
 
     private void Start()
     {
@@ -24,7 +20,7 @@ public class GunDroneManager : MonoBehaviour
 
         foreach(PlayerManager playerManager in players)
         {
-            SpawnDrone(playerManager.GetEquipedDrone(),playerManager.GetGunDroneAnchorPoint());
+            SpawnDrone(playerManager);
         }
     }
     
@@ -35,10 +31,14 @@ public class GunDroneManager : MonoBehaviour
         Gizmos.DrawRay(transform.position, transform.forward * gunDroneSO[0].range);
     }
 
-    private void SpawnDrone (int droneIndex, Transform gunDroneAnchorPoint)
+    private void SpawnDrone (PlayerManager playerManager)
     {
-        GameObject gunDrone = Instantiate(gunDroneSO[droneIndex].dronePrefab);
-        gunDrone.GetComponent<GunDroneController>().SetGunDroneAnchorPoint(gunDroneAnchorPoint);
+        GameObject gunDrone = Instantiate(gunDroneSO[playerManager.GetEquipedDrone()].dronePrefab);
+        GunDroneController gunDroneController = gunDrone.GetComponent<GunDroneController>();
 
+        gunDroneController.SetGunDroneAnchorPoint(playerManager.GetGunDroneAnchorPoint());
+        gunDroneController.SetGunDronePlayer(playerManager.GetPlayerNumber());
+        gunDroneController.SetPlayerPosition(players[playerManager.GetPlayerNumber()].transform);
+        gunDroneController.SetPlayerIHasHealth(playerManager.GetIHasHealth());
     }
 }

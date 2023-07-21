@@ -9,9 +9,6 @@ using Unity.VisualScripting;
 
 public class PlayerManager : MonoBehaviour, IHasHealth
 {
-
-    public static PlayerManager Instance { get; private set; }
-
     [SerializeField] private int player;
     [SerializeField] private float health;
     [SerializeField] private float moveSpeed = 7f, dashSpeed, dashLenght, dashCooldown;
@@ -41,11 +38,6 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
     private void Awake()
     {
-        if (Instance != null)
-        {
-            Debug.LogError("There is more than one player instance");
-        }
-        Instance = this;
         gameInput = DATA.Instance.gameInput;
     }
 
@@ -54,21 +46,11 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         getInputVector.Add(gameInput.GetKeyboardMovementVectorNormalized);
         getInputVector.Add(gameInput.GetJoystickMovementVectorNormalized);
 
-        gameInput.OnPlayer1Attack += GameInput_OnPlayer1Attack;
-        gameInput.OnPlayer2Attack += GameInput_OnPlayer2Attack;
         gameInput.OnPlayer1Dash += GameInput_OnPlayer1Dash;
         gameInput.OnPlayer2Dash += GameInput_OnPlayer2Dash;
     }
 
 
-    private void GameInput_OnPlayer1Attack(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
-    private void GameInput_OnPlayer2Attack(object sender, EventArgs e)
-    {
-        throw new NotImplementedException();
-    }
     private void GameInput_OnPlayer1Dash(object sender, GameInput.OnPlayer1DashEventArgs e)
     {
         if(player == e.player && CanDash())
@@ -163,7 +145,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
     public enum GunDroneOptions
     {
-        SPADA = 0, SCOPETA = 1,
+        SPADA, SCOPETA, SPADA2
     }
 
     public int GetEquipedDrone()
@@ -174,6 +156,16 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     public Transform GetGunDroneAnchorPoint()
     {
         return gunDroneAnchorPoint;
+    }
+
+    public int GetPlayerNumber()
+    {
+        return player;
+    }
+
+    public IHasHealth GetIHasHealth()
+    {
+        return this;
     }
 
     private void CanMove(Vector2 inputVector, float moveSpeed, LayerMask UndashableLayer)
