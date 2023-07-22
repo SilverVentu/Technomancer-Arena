@@ -51,6 +51,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   droneSpeed: 18
   droneRotSpeed: 50
+  castRadius: 0.4
   anchorOffset: {x: 0, y: 1.58, z: 0}
   gunDroneSO: {fileID: 11400000, guid: 67ffb70a8a692634cbed359df7d57f32, type: 2}
   targetLayer:

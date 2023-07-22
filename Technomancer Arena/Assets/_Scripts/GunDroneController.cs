@@ -11,7 +11,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class GunDroneController : MonoBehaviour{
 
-    [SerializeField] private float droneSpeed,droneRotSpeed;
+    [SerializeField] private float droneSpeed,droneRotSpeed, castRadius;
     [SerializeField] private Vector3 anchorOffset;
     [SerializeField] private GunDroneSO gunDroneSO;
     [SerializeField] private LayerMask targetLayer;
@@ -68,38 +68,7 @@ public class GunDroneController : MonoBehaviour{
         HandleDroneAim();
 
 
-        /*if(Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, gunDroneSO.range, targetLayer))
-        {
-            bool hasIHasHealth = hit.transform.TryGetComponent<IHasHealth>(out IHasHealth target);
-            if (target != playerIHasHealth)
-            {
-                mainHit = hit.point;
-            }
-            else
-            {
-                mainHit = GetMainRayRangeTip();
-                if (Physics.Raycast(GetAuxRayOrigin(), GetAuxRayDirection(), out RaycastHit auxRayHit, Vector3.Distance(GetAuxRayOrigin(), GetMainRayRangeTip()), targetLayer))
-                {
-                    auxHit = auxRayHit.point;
-                }
-                else
-                {
-                    auxHit = mainHit;
-                }
-            }
-        }
-        else
-        {
-            mainHit = GetMainRayRangeTip();
-            if (Physics.Raycast(GetAuxRayOrigin(), GetAuxRayDirection(), out RaycastHit auxRayHit, Vector3.Distance(GetAuxRayOrigin(), GetMainRayRangeTip()), targetLayer))
-            {
-                auxHit = auxRayHit.point;
-            }
-            else
-            {
-                auxHit = mainHit;
-            }
-        }  */      
+            
     }
 
     private void HandleDroneAim()
@@ -168,7 +137,7 @@ public class GunDroneController : MonoBehaviour{
 
     private void Shoot()
     {
-        if (fireRate >= gunDroneSO.fireRate && Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, gunDroneSO.range, targetLayer))
+        if (fireRate >= gunDroneSO.fireRate && Physics.SphereCast(transform.position, castRadius, transform.forward, out RaycastHit hit, gunDroneSO.range, targetLayer))
         {
             if (hit.transform.TryGetComponent<IHasHealth>(out IHasHealth target))
             {
