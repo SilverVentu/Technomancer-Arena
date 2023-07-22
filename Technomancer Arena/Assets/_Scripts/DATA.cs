@@ -23,4 +23,5 @@ public class DATA : MonoBehaviour
     public MousePosition mousePosition;
     public Transform gunDroneAnchorPoint;
     public Camera mainCam;
+    public PlayerSpawner playerSpawner;
 }

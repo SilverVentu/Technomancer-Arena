@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.Mathematics;
 
 public class GameInput : MonoBehaviour
 {
+    [SerializeField] private Vector2 refVelocity;
+    [SerializeField] private float aimSpeed;
     public delegate EventHandler[] playerAttack();
     public event EventHandler OnPlayer1Attack;
     public event EventHandler OnPlayer2Attack;
@@ -14,7 +17,7 @@ public class GameInput : MonoBehaviour
     public MousePosition mousePosition;
 
     private PlayerInputActions playerInputActions;
-
+    private Vector2 smoothVector;
     public class OnPlayer1DashEventArgs : EventArgs
     {
         public int player;
@@ -53,9 +56,9 @@ public class GameInput : MonoBehaviour
     public Vector2 GetJoystickAimDirectionVectorNormalized(){
 
         Vector2 inputVector = playerInputActions.Player2.AimDirection.ReadValue<Vector2>();
-
+        smoothVector = Vector2.SmoothDamp(smoothVector, inputVector, ref refVelocity, aimSpeed);
         //inputVector = inputVector.normalized;
-        return inputVector;
+        return smoothVector;
     }
 
     private void Player1_Dash_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)

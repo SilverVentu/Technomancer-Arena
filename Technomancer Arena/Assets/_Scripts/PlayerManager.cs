@@ -2,10 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEditor.Timeline;
-using System.Threading;
-using Unity.Mathematics;
-using Unity.VisualScripting;
+using UnityEditor.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour, IHasHealth
 {
@@ -86,6 +84,11 @@ public class PlayerManager : MonoBehaviour, IHasHealth
                 break;
         }
 
+        if(health <= 0)
+        {
+            DATA.Instance.playerSpawner.ResetGame();
+        }
+
     }
     private void OnDrawGizmos()
     {
@@ -104,7 +107,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         float dashDistance = Vector3.Distance(transform.position, dashOrigin);
         Vector3 currentPosition = transform.position;
 
-        CanMove(moveDir, dashSpeed, Undashable);
+        CharacterMove(moveDir, dashSpeed, Undashable);
 
         if (dashDistance > dashLenght || currentPosition == lastPosition)
         {
@@ -133,13 +136,17 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
         moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
-        CanMove(moveDir, moveSpeed, collideWith);
+        CharacterMove(moveDir, moveSpeed, collideWith);
         CanDash();
     }
 
     public void TakeDamage(float DMG)
     {
         health -= DMG;
+    }
+    public void SetHealthTo(float healthAmount)
+    {
+        health = healthAmount;
     }
 
 
@@ -168,7 +175,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         return this;
     }
 
-    private void CanMove(Vector2 inputVector, float moveSpeed, LayerMask UndashableLayer)
+    private void CharacterMove(Vector2 inputVector, float moveSpeed, LayerMask UndashableLayer)
     {
         float moveDistance = moveSpeed * Time.deltaTime;
         float playerRadius = .7f;

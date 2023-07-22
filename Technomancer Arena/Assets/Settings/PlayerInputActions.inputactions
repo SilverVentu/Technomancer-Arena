@@ -179,6 +179,17 @@
                 },
                 {
                     "name": "",
+                    "id": "72480c54-6651-4e14-8bcd-94fa25fa1070",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "d86eb051-2acc-4f60-b241-55c563826957",
                     "path": "<Gamepad>/rightStick",
                     "interactions": "",
