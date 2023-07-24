@@ -11,7 +11,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class GunDroneController : MonoBehaviour{
 
-    [SerializeField] private float droneSpeed,droneRotSpeed, castRadius;
+    [SerializeField] private float droneSpeed, droneRotSpeed, castRadius;
     [SerializeField] private Vector3 anchorOffset;
     [SerializeField] private GunDroneSO gunDroneSO;
     [SerializeField] private LayerMask targetLayer;
