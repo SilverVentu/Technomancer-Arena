@@ -61,8 +61,10 @@ Material:
     m_Floats:
     - _Float: 2.25
     - _Fresnel_threshold: 0.751
+    - _Gradient_offset: 0.33
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Spread: 0.52
     - _Texture_influence: 0.99
     m_Colors:
     - _DarkColor: {r: 0.03773582, g: 0.009057256, b: 0.0069063646, a: 0}
