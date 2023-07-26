@@ -19,7 +19,7 @@ public class DATA : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public GameInput gameInput;
+    public KeyboardInput gameInput;
     public MousePosition mousePosition;
     public Transform gunDroneAnchorPoint;
     public Camera mainCam;

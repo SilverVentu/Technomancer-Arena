@@ -60,13 +60,14 @@ Material:
     m_Ints: []
     m_Floats:
     - _Fresnel_threshold: 0.621
-    - _Gradient_offset: 0.88
+    - _Gradient_offset: 1.37
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Spread: 2.8
     - _Texture_influence: 0.99
-    - _gradient_offset: 0.7
+    - _gradient_offset: 1.28
     m_Colors:
-    - _DarkColor: {r: 0.3301887, g: 0, b: 0.09286573, a: 0}
-    - _Light_Color: {r: 0.8773585, g: 0.11091134, b: 0.11091134, a: 0}
+    - _DarkColor: {r: 0.12997004, g: 0.072054096, b: 0.41509432, a: 0}
+    - _Light_Color: {r: 0.10653251, g: 0.5706304, b: 0.990566, a: 0}
     - _Tiling: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

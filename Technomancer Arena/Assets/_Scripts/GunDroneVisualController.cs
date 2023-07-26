@@ -7,7 +7,7 @@ public class GunDroneVisualController : MonoBehaviour
 {
     [SerializeField] private GameObject hitFX;
     [SerializeField] private Animator gunDroneAnimator;
-    private GameInput gameInput;
+    private KeyboardInput gameInput;
     private GunDroneController gunDroneController;
     private GunDroneSO equipedGunDroneSO;
    

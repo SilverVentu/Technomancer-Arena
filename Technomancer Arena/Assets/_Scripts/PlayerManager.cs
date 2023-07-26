@@ -15,16 +15,10 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     [SerializeField] private Transform gunDroneAnchorPoint;
     [SerializeField] private state currentState;
 
-    private GameInput gameInput;
+    private KeyboardInput gameInput;
     private bool isWalking;
     private Vector3 lastDirectionDir, moveDir, dashOrigin, lastPosition;
-    private float moveDistance, /*dashDistance = 0,*/ dashCooldownTimer = 0;
-
-    delegate Vector2 GetInputVector();
-    //delegate void GetInputAction();
-
-    List<GetInputVector> getInputVector = new List<GetInputVector>();
-    //List<GetInputAction> getInputAction = new List<GetInputAction>();
+    private float moveDistance, dashCooldownTimer = 0;
 
     private enum state
     {
@@ -41,30 +35,18 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
     private void Start()
     {
-        getInputVector.Add(gameInput.GetKeyboardMovementVectorNormalized);
-        getInputVector.Add(gameInput.GetJoystickMovementVectorNormalized);
-
-        gameInput.OnPlayer1Dash += GameInput_OnPlayer1Dash;
-        gameInput.OnPlayer2Dash += GameInput_OnPlayer2Dash;
+        gameInput.OnPlayerDash += GameInput_OnPlayerDash;
     }
 
-
-    private void GameInput_OnPlayer1Dash(object sender, GameInput.OnPlayer1DashEventArgs e)
+    private void GameInput_OnPlayerDash(object sender, EventArgs e)
     {
-        if(player == e.player && CanDash())
+        if (CanDash())
         {
             dashOrigin = transform.position;
             currentState = state.DASHING;
         }
     }
-    private void GameInput_OnPlayer2Dash(object sender, GameInput.OnPlayer2DashEventArgs e)
-    {
-        if (player == e.player && CanDash())
-        {
-            dashOrigin = transform.position;
-            currentState = state.DASHING;
-        }
-    }
+
 
 
     private void Update()
@@ -82,11 +64,6 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
             case state.COOLDOWNING:
                 break;
-        }
-
-        if(health <= 0)
-        {
-            DATA.Instance.playerSpawner.ResetGame();
         }
 
     }
@@ -117,6 +94,18 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         lastPosition = currentPosition;
 
     }
+   
+    private void HandleMovement()
+    {
+        Vector2 inputVector = gameInput.GetKeyboardMovementVectorNormalized();
+
+        moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
+
+        CharacterMove(moveDir, moveSpeed, collideWith);
+        CanDash();
+    }
+
+
     private bool CanDash()
     {
         dashCooldownTimer += Time.deltaTime;
@@ -126,18 +115,6 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         }
         return false;
 
-    }
-
-
-   
-    private void HandleMovement()
-    {
-        Vector2 inputVector = getInputVector[player]();
-
-        moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
-
-        CharacterMove(moveDir, moveSpeed, collideWith);
-        CanDash();
     }
 
     public void TakeDamage(float DMG)

@@ -61,9 +61,13 @@ Material:
     m_Floats:
     - _Float: 2.25
     - _Fresnel_threshold: 0.751
+    - _Gradient_offset: 1.48
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Spread: 1.6
+    - _Texture_influence: 0.99
     m_Colors:
     - _DarkColor: {r: 0.6226415, g: 0.17871353, b: 0.008223535, a: 0}
     - _Light_Color: {r: 0.9007368, g: 1, b: 0, a: 0}
+    - _Tiling: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
