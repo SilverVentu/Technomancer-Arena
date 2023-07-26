@@ -239,10 +239,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d71c8b67a33a6b4a89d5cf997a97716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _componentIndexCache: 255
+  _addedNetworkObject: {fileID: 0}
+  _networkObjectCache: {fileID: 0}
   player: 1
   health: 100
   moveSpeed: 11.67
-  gameInput: {fileID: 0}
+  dashSpeed: 0
+  dashLenght: 0
+  dashCooldown: 0
+  Undashable:
+    serializedVersion: 2
+    m_Bits: 0
+  collideWith:
+    serializedVersion: 2
+    m_Bits: 0
+  equipedGunDrone: 0
+  gunDroneAnchorPoint: {fileID: 0}
+  currentState: 0
 --- !u!136 &3679517410793025912
 CapsuleCollider:
   m_ObjectHideFlags: 0

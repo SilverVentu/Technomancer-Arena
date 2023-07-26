@@ -2,10 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
+using FishNet.Object;
 
-public class PlayerManager : MonoBehaviour, IHasHealth
+public class PlayerManager : NetworkBehaviour, IHasHealth
 {
     [SerializeField] private int player;
     [SerializeField] private float health;
@@ -69,6 +68,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
     private void Update()
     {
+        if (!base.IsOwner) return;
 
         switch (currentState)
         {
