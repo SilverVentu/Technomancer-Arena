@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.iOS;
 
-public class GunDroneManager : MonoBehaviour
+public class GunDroneManagerOLD : MonoBehaviour
 {
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private PlayerManager[] players;
@@ -34,7 +34,7 @@ public class GunDroneManager : MonoBehaviour
     private void SpawnDrone (PlayerManager playerManager)
     {
         GameObject gunDrone = Instantiate(gunDroneSO[playerManager.GetEquipedDrone()].dronePrefab);
-        GunDroneController gunDroneController = gunDrone.GetComponent<GunDroneController>();
+        GunDroneControllerOLD gunDroneController = gunDrone.GetComponent<GunDroneControllerOLD>();
 
         gunDroneController.SetGunDroneAnchorPoint(playerManager.GetGunDroneAnchorPoint());
         gunDroneController.SetGunDronePlayer(playerManager.GetPlayerNumber());

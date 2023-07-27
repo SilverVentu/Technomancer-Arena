@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Experimental.GraphView.GraphView;
 
-public class PlayerSpawner : MonoBehaviour
+public class PlayerSpawnerOLD : MonoBehaviour
 {
     [SerializeField] private PlayerManager[] player;
     [SerializeField] private Transform[] spawnPoint;

@@ -7,16 +7,16 @@ public class GunDroneVisualController : MonoBehaviour
 {
     [SerializeField] private GameObject hitFX;
     [SerializeField] private Animator gunDroneAnimator;
-    private KeyboardInput gameInput;
-    private GunDroneController gunDroneController;
+    private InputManager gameInput;
+    private GunDroneControllerOLD gunDroneController;
     private GunDroneSO equipedGunDroneSO;
    
     private ParticleSystem hitFXParticles;
 
     private void Start()
     {
-        gameInput = DATA.Instance.gameInput;
-        gunDroneController = GetComponentInParent<GunDroneController>();
+        gameInput = DATA.Instance.inputManager;
+        gunDroneController = GetComponentInParent<GunDroneControllerOLD>();
         //equipedGunDroneSO = gunDroneManager.gunDroneSO[0];
         //SpawnDrone(equipedGunDroneSO.droneVisual);
 
@@ -32,7 +32,7 @@ public class GunDroneVisualController : MonoBehaviour
 
     }
 
-    private void GunDroneController_OnShot(object sender, GunDroneController.OnHitEventArgs e)
+    private void GunDroneController_OnShot(object sender, GunDroneControllerOLD.OnHitEventArgs e)
     {
         hitFX.transform.position = e.hitPosition;
         hitFXParticles.Play();

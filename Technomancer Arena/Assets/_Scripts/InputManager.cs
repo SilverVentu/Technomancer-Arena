@@ -4,12 +4,11 @@ using UnityEngine;
 using System;
 using Unity.Mathematics;
 
-public class KeyboardInput : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
     [SerializeField] private Vector2 refVelocity;
     [SerializeField] private float aimSpeed;
-    public event EventHandler OnPlayer1Attack;
-    public event EventHandler OnPlayerDash;
+    public event EventHandler OnPlayer1Attack, OnPlayerDash, OnTakeAim, OnLowerAim;
 
     public MousePosition mousePosition;
 
@@ -17,13 +16,24 @@ public class KeyboardInput : MonoBehaviour
 
 
     private void Awake(){
+        mousePosition = GetComponent<MousePosition>();
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player1.Enable();
-        playerInputActions.Player1.Attack.performed += Player1_Attack_performed;
+        playerInputActions.Player1.PlayerShoot.performed += Player1_Attack_performed;
+        playerInputActions.Player1.PlayerTakeAim.performed += PlayerTakeAim_performed;
+        playerInputActions.Player1.PlayerTakeAim.canceled += PlayerTakeAim_canceled;
         playerInputActions.Player1.Dash.performed += Player1_Dash_performed;
     }
 
+    private void PlayerTakeAim_canceled(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnLowerAim?.Invoke(this, EventArgs.Empty);
+    }
 
+    private void PlayerTakeAim_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    {
+        OnTakeAim?.Invoke(this, EventArgs.Empty);
+    }
 
     public Vector2 GetKeyboardMovementVectorNormalized(){
 

@@ -15,10 +15,13 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     [SerializeField] private Transform gunDroneAnchorPoint;
     [SerializeField] private state currentState;
 
-    private KeyboardInput gameInput;
+    private InputManager inputManager;
     private bool isWalking;
     private Vector3 lastDirectionDir, moveDir, dashOrigin, lastPosition;
     private float moveDistance, dashCooldownTimer = 0;
+    private delegate void AvailableActions();
+
+    private AvailableActions availableActions;
 
     private enum state
     {
@@ -26,16 +29,20 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         DASHING,
         COOLDOWNING,
     }
-
-
-    private void Awake()
+    public enum GunDroneOptions
     {
-        gameInput = DATA.Instance.gameInput;
+        SPADA,
+        SCOPETA,
     }
+
 
     private void Start()
     {
-        gameInput.OnPlayerDash += GameInput_OnPlayerDash;
+        inputManager = DATA.Instance.inputManager;
+
+        SetState(state.NEUTRAL);
+
+        inputManager.OnPlayerDash += GameInput_OnPlayerDash;
     }
 
     private void GameInput_OnPlayerDash(object sender, EventArgs e)
@@ -43,7 +50,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         if (CanDash())
         {
             dashOrigin = transform.position;
-            currentState = state.DASHING;
+            SetState(state.DASHING);
         }
     }
 
@@ -52,21 +59,27 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     private void Update()
     {
 
-        switch (currentState)
+        availableActions();
+    }
+
+    private void SetState(state state)
+    {
+
+        switch (state)
         {
             case state.NEUTRAL:
-                HandleMovement();
+                availableActions = HandleMovement;
                 break;
 
             case state.DASHING:
-                HandleDash();
+                availableActions = HandleDash;
                 break;
 
             case state.COOLDOWNING:
                 break;
         }
-
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(dashOrigin, 1);
@@ -88,7 +101,8 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
         if (dashDistance > dashLenght || currentPosition == lastPosition)
         {
-            currentState = state.NEUTRAL;
+            //currentState = state.NEUTRAL;
+            SetState(state.NEUTRAL);
             dashCooldownTimer = 0f;
         }
         lastPosition = currentPosition;
@@ -97,7 +111,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
    
     private void HandleMovement()
     {
-        Vector2 inputVector = gameInput.GetKeyboardMovementVectorNormalized();
+        Vector2 inputVector = inputManager.GetKeyboardMovementVectorNormalized();
 
         moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
@@ -120,16 +134,6 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     public void TakeDamage(float DMG)
     {
         health -= DMG;
-    }
-    public void SetHealthTo(float healthAmount)
-    {
-        health = healthAmount;
-    }
-
-
-    public enum GunDroneOptions
-    {
-        SPADA, SCOPETA, SPADA2
     }
 
     public int GetEquipedDrone()

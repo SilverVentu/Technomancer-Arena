@@ -37,9 +37,27 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""PlayerShoot"",
                     ""type"": ""Button"",
                     ""id"": ""75276aae-efab-4efc-9f56-bd3f3b78fafa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlayerTakeAim"",
+                    ""type"": ""Button"",
+                    ""id"": ""280c23d6-9cee-4ac2-ae9b-3831ba66ef77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PlayerAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""0946e22b-96bc-49e3-9fe9-a3f334fc520e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -118,7 +136,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Attack"",
+                    ""action"": ""PlayerShoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -130,6 +148,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""keyboard;Joystick"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e23c4591-8035-41b4-9752-7b0cab2d8681"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerTakeAim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""597798c7-990b-462b-b3fc-b5087fea432c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlayerAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -152,7 +192,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player1
         m_Player1 = asset.FindActionMap("Player1", throwIfNotFound: true);
         m_Player1_Move = m_Player1.FindAction("Move", throwIfNotFound: true);
-        m_Player1_Attack = m_Player1.FindAction("Attack", throwIfNotFound: true);
+        m_Player1_PlayerShoot = m_Player1.FindAction("PlayerShoot", throwIfNotFound: true);
+        m_Player1_PlayerTakeAim = m_Player1.FindAction("PlayerTakeAim", throwIfNotFound: true);
+        m_Player1_PlayerAttack = m_Player1.FindAction("PlayerAttack", throwIfNotFound: true);
         m_Player1_Dash = m_Player1.FindAction("Dash", throwIfNotFound: true);
     }
 
@@ -216,14 +258,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player1;
     private List<IPlayer1Actions> m_Player1ActionsCallbackInterfaces = new List<IPlayer1Actions>();
     private readonly InputAction m_Player1_Move;
-    private readonly InputAction m_Player1_Attack;
+    private readonly InputAction m_Player1_PlayerShoot;
+    private readonly InputAction m_Player1_PlayerTakeAim;
+    private readonly InputAction m_Player1_PlayerAttack;
     private readonly InputAction m_Player1_Dash;
     public struct Player1Actions
     {
         private @PlayerInputActions m_Wrapper;
         public Player1Actions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Player1_Move;
-        public InputAction @Attack => m_Wrapper.m_Player1_Attack;
+        public InputAction @PlayerShoot => m_Wrapper.m_Player1_PlayerShoot;
+        public InputAction @PlayerTakeAim => m_Wrapper.m_Player1_PlayerTakeAim;
+        public InputAction @PlayerAttack => m_Wrapper.m_Player1_PlayerAttack;
         public InputAction @Dash => m_Wrapper.m_Player1_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Player1; }
         public void Enable() { Get().Enable(); }
@@ -237,9 +283,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
+            @PlayerShoot.started += instance.OnPlayerShoot;
+            @PlayerShoot.performed += instance.OnPlayerShoot;
+            @PlayerShoot.canceled += instance.OnPlayerShoot;
+            @PlayerTakeAim.started += instance.OnPlayerTakeAim;
+            @PlayerTakeAim.performed += instance.OnPlayerTakeAim;
+            @PlayerTakeAim.canceled += instance.OnPlayerTakeAim;
+            @PlayerAttack.started += instance.OnPlayerAttack;
+            @PlayerAttack.performed += instance.OnPlayerAttack;
+            @PlayerAttack.canceled += instance.OnPlayerAttack;
             @Dash.started += instance.OnDash;
             @Dash.performed += instance.OnDash;
             @Dash.canceled += instance.OnDash;
@@ -250,9 +302,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
             @Move.canceled -= instance.OnMove;
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
+            @PlayerShoot.started -= instance.OnPlayerShoot;
+            @PlayerShoot.performed -= instance.OnPlayerShoot;
+            @PlayerShoot.canceled -= instance.OnPlayerShoot;
+            @PlayerTakeAim.started -= instance.OnPlayerTakeAim;
+            @PlayerTakeAim.performed -= instance.OnPlayerTakeAim;
+            @PlayerTakeAim.canceled -= instance.OnPlayerTakeAim;
+            @PlayerAttack.started -= instance.OnPlayerAttack;
+            @PlayerAttack.performed -= instance.OnPlayerAttack;
+            @PlayerAttack.canceled -= instance.OnPlayerAttack;
             @Dash.started -= instance.OnDash;
             @Dash.performed -= instance.OnDash;
             @Dash.canceled -= instance.OnDash;
@@ -294,7 +352,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayer1Actions
     {
         void OnMove(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
+        void OnPlayerShoot(InputAction.CallbackContext context);
+        void OnPlayerTakeAim(InputAction.CallbackContext context);
+        void OnPlayerAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
     }
 }

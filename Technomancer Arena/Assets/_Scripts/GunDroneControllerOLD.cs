@@ -6,10 +6,10 @@ using UnityEngine;
 using UnityEngine.PlayerLoop;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UIElements;
-using static GunDroneManager;
+using static GunDroneManagerOLD;
 using static UnityEngine.GraphicsBuffer;
 
-public class GunDroneController : MonoBehaviour{
+public class GunDroneControllerOLD : MonoBehaviour{
 
     [SerializeField] private float droneSpeed, droneRotSpeed, castRadius;
     [SerializeField] private Vector3 anchorOffset;
@@ -17,9 +17,9 @@ public class GunDroneController : MonoBehaviour{
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private int player;
     private IHasHealth playerIHasHealth;
-    private KeyboardInput gameInput;
+    private InputManager gameInput;
     private Transform playerPosition;
-    private Transform gunDroneAnchorPoint;
+    [SerializeField]private Transform gunDroneAnchorPoint;
     private MousePosition mousePosition;
     private Vector3 gizmoPosition, gizmoPosition2, mainHit, auxHit;
     private float fireRate;
@@ -37,7 +37,7 @@ public class GunDroneController : MonoBehaviour{
     private void Start()
     {
         mousePosition = DATA.Instance.mousePosition;
-        gameInput = DATA.Instance.gameInput;
+        gameInput = DATA.Instance.inputManager;
 
         gameInput.OnPlayer1Attack += GameInput_OnPlayer1Attack;
 
@@ -65,15 +65,15 @@ public class GunDroneController : MonoBehaviour{
 
     private void HandleDroneAim()
     {
-        Vector3 mousePositionDirection = (mousePosition.GetGunPointerTransform().position + anchorOffset) - transform.position;
+        Vector3 mousePositionDirection = (mousePosition.GetPointerTransform().position) - transform.position;
 
         // this normalices the position of the mouse, then adds the position of the drone and substracts its height
-        Vector3 aimDirection = mousePositionDirection.normalized + gunDroneAnchorPoint.transform.position + anchorOffset;
+        Vector3 aimDirection = mousePositionDirection.normalized + transform.position;
 
-        transform.position = Vector3.Slerp(transform.position, gunDroneAnchorPoint.position + anchorOffset, Time.deltaTime * droneSpeed);
+        //transform.position = Vector3.Slerp(transform.position, gunDroneAnchorPoint.position + anchorOffset, Time.deltaTime * droneSpeed);
         transform.forward = aimDirection - transform.position;
 
-        gizmoPosition = mousePositionDirection.normalized + gunDroneAnchorPoint.transform.position;
+        gizmoPosition = mousePositionDirection.normalized + transform.position;
         gizmoPosition2 = aimDirection;
     }
     

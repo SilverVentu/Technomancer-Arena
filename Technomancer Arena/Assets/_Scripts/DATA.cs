@@ -19,9 +19,9 @@ public class DATA : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    public KeyboardInput gameInput;
+    public InputManager inputManager;
     public MousePosition mousePosition;
     public Transform gunDroneAnchorPoint;
     public Camera mainCam;
-    public PlayerSpawner playerSpawner;
+    public PlayerSpawnerOLD playerSpawner;
 }

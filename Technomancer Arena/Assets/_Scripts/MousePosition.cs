@@ -27,7 +27,7 @@ public class MousePosition : MonoBehaviour{
         
     }
 
-    public Transform GetGunPointerTransform(){
+    public Transform GetPointerTransform(){
         return gunPointer; 
     }
 }
