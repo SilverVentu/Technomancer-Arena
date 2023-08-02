@@ -18,4 +18,4 @@ MonoBehaviour:
   hitFX: {fileID: 8931728950246686793, guid: d61110a964ed82044b2c75faaf6c35fc, type: 3}
   damage: 20
   fireRate: 0.5
-  range: 15
+  range: 5

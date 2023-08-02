@@ -39,6 +39,8 @@ public class GunDroneControllerOLD : MonoBehaviour{
         mousePosition = DATA.Instance.mousePosition;
         gameInput = DATA.Instance.inputManager;
 
+
+
         gameInput.OnPlayer1Attack += GameInput_OnPlayer1Attack;
 
     }

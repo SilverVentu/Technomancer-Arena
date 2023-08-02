@@ -4,21 +4,22 @@ using UnityEngine;
 using System;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 
 public class PlayerManager : MonoBehaviour, IHasHealth
 {
     [SerializeField] private int player;
     [SerializeField] private float health;
-    [SerializeField] private float moveSpeed = 7f, dashSpeed, dashLenght, dashCooldown;
+    [SerializeField] private float runSpeed, aimingSpeed, dashSpeed, dashLenght, dashCooldown;
     [SerializeField] private LayerMask Undashable, collideWith;
     [SerializeField] private GunDroneOptions equipedGunDrone;
     [SerializeField] private Transform gunDroneAnchorPoint;
-    [SerializeField] private state currentState;
+    [SerializeField] private state currentState, previosState;
 
     private InputManager inputManager;
     private bool isWalking;
     private Vector3 lastDirectionDir, moveDir, dashOrigin, lastPosition;
-    private float moveDistance, dashCooldownTimer = 0;
+    private float moveDistance, dashCooldownTimer = 0, moveSpeed;
     private delegate void AvailableActions();
 
     private AvailableActions availableActions;
@@ -28,6 +29,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         NEUTRAL,
         DASHING,
         COOLDOWNING,
+        AIMING,
     }
     public enum GunDroneOptions
     {
@@ -43,6 +45,21 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         SetState(state.NEUTRAL);
 
         inputManager.OnPlayerDash += GameInput_OnPlayerDash;
+        inputManager.OnTakeAim += InputManager_OnTakeAim;
+        inputManager.OnLowerAim += InputManager_OnLowerAim;
+    }
+
+    private void InputManager_OnLowerAim(object sender, EventArgs e)
+    {
+        SetState(state.NEUTRAL);
+    }
+
+    private void InputManager_OnTakeAim(object sender, EventArgs e)
+    {
+        if(currentState == state.NEUTRAL)
+        {
+            SetState(state.AIMING);
+        }
     }
 
     private void GameInput_OnPlayerDash(object sender, EventArgs e)
@@ -58,16 +75,17 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
     private void Update()
     {
-
         availableActions();
     }
 
     private void SetState(state state)
     {
-
+        previosState = currentState;
+        currentState = state;
         switch (state)
         {
             case state.NEUTRAL:
+                moveSpeed = runSpeed;
                 availableActions = HandleMovement;
                 break;
 
@@ -75,6 +93,10 @@ public class PlayerManager : MonoBehaviour, IHasHealth
                 availableActions = HandleDash;
                 break;
 
+            case state.AIMING:
+                moveSpeed = aimingSpeed;
+                availableActions = HandleMovement;
+                break;
             case state.COOLDOWNING:
                 break;
         }
@@ -101,8 +123,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
         if (dashDistance > dashLenght || currentPosition == lastPosition)
         {
-            //currentState = state.NEUTRAL;
-            SetState(state.NEUTRAL);
+            SetState(previosState);
             dashCooldownTimer = 0f;
         }
         lastPosition = currentPosition;

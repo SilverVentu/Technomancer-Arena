@@ -18,8 +18,8 @@ TagManager:
   - DashableObstacle
   - UndashableObstacle
   - EnemyDroid
-  - Player1
-  - Player2
+  - Player
+  - PlayerVisual
   - 
   - 
   - 

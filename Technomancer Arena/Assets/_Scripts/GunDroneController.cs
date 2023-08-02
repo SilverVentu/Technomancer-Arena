@@ -1,11 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 public class GunDroneController : MonoBehaviour
 {
     [SerializeField] private Transform[] dronePosition;
-    [SerializeField] private float droneRange;
+    [SerializeField] private float droneRotSpeed;
+    [SerializeField] private LayerMask targetsLayer;
+    [SerializeField] private GunDroneSO gunDroneSO;
+    [SerializeField] private List<GameObject> targets = new List<GameObject>();
+    private Collider[] nearbyEnemies;
 
     private Vector3 gizmoPosition;
 
@@ -72,24 +78,63 @@ public class GunDroneController : MonoBehaviour
         // this normalices the position of the mouse, then adds the position of the drone and substracts its height
         Vector3 aimDirection = mousePositionDirection.normalized + transform.position;
         transform.position = mousePositionDirection.normalized + transform.root.position;
-        transform.forward = aimDirection - transform.position;
+        //transform.forward = Vector3.Slerp(transform.forward, aimDirection - transform.position, droneRotSpeed * Time.deltaTime);
+        transform.LookAt(mousePosition.GetPointerTransform().position);
         gizmoPosition = mousePositionDirection.normalized + transform.root.position;
     }
 
     private void HandleDroneIdle()
     {
-        Vector3 mousePositionDirection = (mousePosition.GetPointerTransform().position) - transform.position;
+        //float distance = gunDroneSO.range;
+        //Vector3 target = transform.forward;
+        nearbyEnemies = Physics.OverlapSphere(transform.root.position, gunDroneSO.range, targetsLayer);
+        if (nearbyEnemies.Length == 0) return;
 
-        // this normalices the position of the mouse, then adds the position of the drone and substracts its height
-        Vector3 aimDirection = mousePositionDirection.normalized + transform.position;
+        Collider target = nearbyEnemies[0];
 
-        //transform.position = Vector3.Slerp(transform.position, gunDroneAnchorPoint.position + anchorOffset, Time.deltaTime * droneSpeed);
-        transform.forward = aimDirection - transform.position;
+        Debug.Log("enemies in range");
+
+
+        /*for(int i = 1; i < nearbyEnemies.Length; i++)
+        {
+            Debug.Log("looping");
+            float distance = Vector3.Distance(nearbyEnemies[i].transform.position, transform.root.position);
+            int leftDistaces;
+            for(leftDistaces = i - 1;  leftDistaces >= 0 && Vector3.Distance(nearbyEnemies[leftDistaces].transform.position, transform.root.position) < distance; leftDistaces--)
+            {
+
+                Debug.Log("loopin 2");
+                nearbyEnemies[leftDistaces + 1] = nearbyEnemies[leftDistaces];
+            }
+            nearbyEnemies[leftDistaces + 1] = nearbyEnemies[i];
+        }*/
+
+        for(int i = 0; i < nearbyEnemies.Length; i++)
+        {
+            if (nearbyEnemies[i].gameObject.layer == 7)
+            {
+                target = nearbyEnemies[i];
+                transform.LookAt(target.transform);
+                return;
+            }
+
+            if (Vector3.Distance(nearbyEnemies[i].transform.position, transform.root.position) <= Vector3.Distance(target.transform.position, transform.root.position))
+            {
+                target = nearbyEnemies[i];
+            }
+
+        }
+
+        transform.LookAt(target.transform);
     }
+
+
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(gizmoPosition, 1.5f);
+        Gizmos.DrawWireSphere(transform.root.position, gunDroneSO.range);
     }
  
 }
