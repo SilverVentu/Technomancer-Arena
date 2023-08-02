@@ -94,27 +94,13 @@ public class GunDroneController : MonoBehaviour
 
         Debug.Log("enemies in range");
 
-
-        /*for(int i = 1; i < nearbyEnemies.Length; i++)
-        {
-            Debug.Log("looping");
-            float distance = Vector3.Distance(nearbyEnemies[i].transform.position, transform.root.position);
-            int leftDistaces;
-            for(leftDistaces = i - 1;  leftDistaces >= 0 && Vector3.Distance(nearbyEnemies[leftDistaces].transform.position, transform.root.position) < distance; leftDistaces--)
-            {
-
-                Debug.Log("loopin 2");
-                nearbyEnemies[leftDistaces + 1] = nearbyEnemies[leftDistaces];
-            }
-            nearbyEnemies[leftDistaces + 1] = nearbyEnemies[i];
-        }*/
-
         for(int i = 0; i < nearbyEnemies.Length; i++)
         {
             if (nearbyEnemies[i].gameObject.layer == 7)
             {
                 target = nearbyEnemies[i];
                 transform.LookAt(target.transform);
+                i = nearbyEnemies.Length;
                 return;
             }
 
