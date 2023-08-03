@@ -89,7 +89,7 @@ public class GunDroneController : MonoBehaviour
     private void HandleDroneIdle()
     {
         transform.forward = transform.forward;
-        nearbyEnemies = Physics.OverlapSphere(transform.root.position, gunDroneSO.range, targetsLayer);
+        nearbyEnemies = Physics.OverlapSphere(targetPosition.position, gunDroneSO.range, targetsLayer);
 
         if (nearbyEnemies.Length == 0) return;
 
@@ -125,7 +125,7 @@ public class GunDroneController : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(gizmoPosition, 1.5f);
-        Gizmos.DrawWireSphere(transform.root.position, gunDroneSO.range);
+        Gizmos.DrawWireSphere(targetPosition.position, gunDroneSO.range);
     }
  
 }
