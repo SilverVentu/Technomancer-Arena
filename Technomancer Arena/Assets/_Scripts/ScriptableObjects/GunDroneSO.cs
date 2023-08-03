@@ -9,6 +9,7 @@ public class GunDroneSO : ScriptableObject
     public GameObject dronePrefab, hitFX;
     public float damage;
     public float fireRate;
+    public float aimingSpeed;
     public float range;
 
 }
