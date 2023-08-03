@@ -106,8 +106,8 @@ public class GunDroneController : MonoBehaviour
             }
             Debug.Log("checkpoint 2");
 
-            float currentCharacter = Vector3.Distance(nearbyEnemies[i].transform.position, transform.root.position);
-            float targetedCharacter = Vector3.Distance(target.transform.position, transform.root.position);
+            float currentCharacter = Vector3.Distance(nearbyEnemies[i].transform.position, dronePosition[1].localPosition);
+            float targetedCharacter = Vector3.Distance(target.transform.position, dronePosition[1].localPosition);
 
             if (currentCharacter <= targetedCharacter)
             {
@@ -116,7 +116,7 @@ public class GunDroneController : MonoBehaviour
 
         }
         Debug.Log("out of the loop");
-        transform.forward = Vector3.Slerp(transform.forward, target.transform.position - transform.position, gunDroneSO.aimingSpeed * Time.deltaTime);
+        transform.forward = Vector3.Slerp(transform.forward, new Vector3(target.transform.position.x, 0, target.transform.position.z) - transform.position, gunDroneSO.aimingSpeed * Time.deltaTime);
     }
 
 
