@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.UIElements;
 using UnityEngine;
+using static GunDroneControllerOLD;
 
 public class GunDroneController : MonoBehaviour
 {
@@ -11,16 +13,18 @@ public class GunDroneController : MonoBehaviour
     [SerializeField] private LayerMask targetsLayer;
     [SerializeField] private GunDroneSO gunDroneSO;
     [SerializeField] private List<GameObject> targets = new List<GameObject>();
+   
+    
     private Collider[] nearbyEnemies;
     private Transform targetPosition;
-
+    private float fireRate;
     private Vector3 gizmoPosition;
-
-
-
     private InputManager inputManager;
     private MousePosition mousePosition;
     private delegate void AvailableDroneActions();
+
+
+    public event EventHandler<OnHitEventArgs> OnShot;
 
     private AvailableDroneActions availableDroneActions;
 
@@ -28,9 +32,17 @@ public class GunDroneController : MonoBehaviour
     {
         inputManager = DATA.Instance.inputManager;
         mousePosition = DATA.Instance.mousePosition;
+        inputManager.OnPlayerAttack += InputManager_OnPlayerAttack;
         inputManager.OnTakeAim += InputManager_OnTakeAim;
         inputManager.OnLowerAim += InputManager_OnLowerAim;
         SetState(state.IDLE);
+    }
+
+    private void InputManager_OnPlayerAttack(object sender, EventArgs e)
+    {
+        Shoot();
+
+        Debug.Log("PewPew");
     }
 
     private void InputManager_OnTakeAim(object sender, System.EventArgs e)
@@ -55,6 +67,7 @@ public class GunDroneController : MonoBehaviour
 
         transform.localPosition = targetPosition.position;
         availableDroneActions();
+        fireRate += Time.deltaTime;
     }
 
     private void SetState(state state)
@@ -83,7 +96,7 @@ public class GunDroneController : MonoBehaviour
         transform.position = mousePositionDirection.normalized + targetPosition.position;
         transform.forward = Vector3.Slerp(transform.forward, mousePosition.GetPointerTransform().position - transform.position, droneRotSpeed * Time.deltaTime);
         //transform.LookAt(mousePosition.GetPointerTransform().position);
-        gizmoPosition = mousePositionDirection.normalized + transform.root.position;
+        gizmoPosition = mousePositionDirection.normalized + dronePosition[1].localPosition;
     }
 
     private void HandleDroneIdle()
@@ -95,8 +108,6 @@ public class GunDroneController : MonoBehaviour
 
         Collider target = nearbyEnemies[0];
 
-        Debug.Log("enemies in range");
-
         for(int i = 0; i < nearbyEnemies.Length; i++)
         {
             if (nearbyEnemies[i].gameObject.layer == 7)
@@ -104,7 +115,6 @@ public class GunDroneController : MonoBehaviour
                 target = nearbyEnemies[i];
                 break;
             }
-            Debug.Log("checkpoint 2");
 
             float currentCharacter = Vector3.Distance(nearbyEnemies[i].transform.position, dronePosition[1].localPosition);
             float targetedCharacter = Vector3.Distance(target.transform.position, dronePosition[1].localPosition);
@@ -115,17 +125,44 @@ public class GunDroneController : MonoBehaviour
             }
 
         }
-        Debug.Log("out of the loop");
         transform.forward = Vector3.Slerp(transform.forward, new Vector3(target.transform.position.x, 0, target.transform.position.z) - transform.position, gunDroneSO.aimingSpeed * Time.deltaTime);
     }
 
 
+    private void Shoot()
+    {
+        if (fireRate >= gunDroneSO.fireRate && Physics.SphereCast(transform.localPosition, gunDroneSO.shootHitboxRadius, transform.forward, out RaycastHit hit, gunDroneSO.range, gunDroneSO.hitLayerMask))
+        {
+            if (hit.transform.TryGetComponent<IHasHealth>(out IHasHealth target))
+            {
+                Debug.Log(target);
+                target.TakeDamage(gunDroneSO.damage);
+                OnShot?.Invoke(this, new OnHitEventArgs { hitPosition = hit.point });
+                fireRate = 0;
+            }
+            else
+            {
+                OnShot?.Invoke(this, new OnHitEventArgs { hitPosition = hit.point });
+                fireRate = 0;
+            }
+        }
+        else
+        {
+            if (fireRate >= gunDroneSO.fireRate)
+            {
+                OnShot?.Invoke(this, new OnHitEventArgs { hitPosition = (transform.forward * gunDroneSO.range)+ transform.localPosition });
+                fireRate = 0;
 
-    private void OnDrawGizmos()
+            }
+        }
+    }
+
+
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(gizmoPosition, 1.5f);
         Gizmos.DrawWireSphere(targetPosition.position, gunDroneSO.range);
-    }
+    }*/
  
 }

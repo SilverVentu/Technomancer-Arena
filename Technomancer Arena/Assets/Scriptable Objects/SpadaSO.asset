@@ -16,7 +16,11 @@ MonoBehaviour:
   dronePrefab: {fileID: 1708325561984801307, guid: 47cfdb77384210d4585991d8a8ecebdb,
     type: 3}
   hitFX: {fileID: 8931728950246686793, guid: d61110a964ed82044b2c75faaf6c35fc, type: 3}
+  hitLayerMask:
+    serializedVersion: 2
+    m_Bits: 3200
   damage: 20
   fireRate: 0.5
   aimingSpeed: 2
-  range: 5
+  range: 8
+  shootHitboxRadius: 0.5

@@ -41,7 +41,7 @@ public class GunDroneControllerOLD : MonoBehaviour{
 
 
 
-        gameInput.OnPlayer1Attack += GameInput_OnPlayer1Attack;
+        gameInput.OnPlayerAttack += GameInput_OnPlayer1Attack;
 
     }
 

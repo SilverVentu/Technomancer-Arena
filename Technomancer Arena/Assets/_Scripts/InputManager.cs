@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField] private Vector2 refVelocity;
     [SerializeField] private float aimSpeed;
-    public event EventHandler OnPlayer1Attack, OnPlayerDash, OnTakeAim, OnLowerAim;
+    public event EventHandler OnPlayerAttack, OnPlayerDash, OnTakeAim, OnLowerAim;
 
     public MousePosition mousePosition;
 
@@ -19,7 +19,7 @@ public class InputManager : MonoBehaviour
         mousePosition = GetComponent<MousePosition>();
         playerInputActions = new PlayerInputActions();
         playerInputActions.Player1.Enable();
-        playerInputActions.Player1.PlayerShoot.performed += Player1_Attack_performed;
+        playerInputActions.Player1.PlayerShoot.performed += Player_Attack_performed;
         playerInputActions.Player1.PlayerTakeAim.performed += PlayerTakeAim_performed;
         playerInputActions.Player1.PlayerTakeAim.canceled += PlayerTakeAim_canceled;
         playerInputActions.Player1.Dash.performed += Player1_Dash_performed;
@@ -50,8 +50,8 @@ public class InputManager : MonoBehaviour
 
 
 
-    private void Player1_Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
+    private void Player_Attack_performed(UnityEngine.InputSystem.InputAction.CallbackContext obj)
     {
-        OnPlayer1Attack?.Invoke(this, EventArgs.Empty);
+        OnPlayerAttack?.Invoke(this, EventArgs.Empty);
     }
 }
