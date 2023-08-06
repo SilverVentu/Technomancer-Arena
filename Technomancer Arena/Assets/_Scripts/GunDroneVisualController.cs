@@ -6,6 +6,7 @@ using UnityEngine;
 public class GunDroneVisualController : MonoBehaviour
 {
     [SerializeField] private GameObject hitFX;
+    [SerializeField] private Vector3 hitFXOffset;
     [SerializeField] private Animator gunDroneAnimator;
     [SerializeField] private GunDroneController gunDroneController;
     private InputManager gameInput;
@@ -33,7 +34,7 @@ public class GunDroneVisualController : MonoBehaviour
 
     private void GunDroneController_OnShot(object sender, GunDroneControllerOLD.OnHitEventArgs e)
     {
-        hitFX.transform.position = e.hitPosition;
+        hitFX.transform.position = e.hitPosition + hitFXOffset;
         hitFXParticles.Play();
         gunDroneAnimator.SetTrigger("Shoot");
     }
