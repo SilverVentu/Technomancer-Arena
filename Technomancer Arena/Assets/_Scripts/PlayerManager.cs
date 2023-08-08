@@ -10,7 +10,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 {
     [SerializeField] private int player;
     [SerializeField] private float health;
-    [SerializeField] private float runSpeed, aimingSpeed, dashSpeed, dashLenght, dashCooldown;
+    [SerializeField] private float runSpeed, aimingSpeed, speedChangeSpeed, dashSpeed, dashLenght, dashCooldown;
     [SerializeField] private LayerMask Undashable, collideWith;
     [SerializeField] private GunDroneOptions equipedGunDrone;
     [SerializeField] private Transform gunDroneAnchorPoint;
@@ -19,7 +19,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     private InputManager inputManager;
     private bool isWalking;
     private Vector3 lastDirectionDir, moveDir, dashOrigin, lastPosition;
-    private float moveDistance, dashCooldownTimer = 0, moveSpeed;
+    private float moveDistance, dashCooldownTimer = 0, targetMoveSpeed, actualMoveSpeed;
     private delegate void AvailableActions();
 
     private AvailableActions availableActions;
@@ -76,6 +76,8 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     private void Update()
     {
         availableActions();
+        actualMoveSpeed = Mathf.Lerp(actualMoveSpeed, targetMoveSpeed, speedChangeSpeed * Time.deltaTime);
+
     }
 
     private void SetState(state state)
@@ -85,7 +87,9 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         switch (state)
         {
             case state.NEUTRAL:
-                moveSpeed = runSpeed;
+                StopCoroutine(DecreaseSpeed());
+                targetMoveSpeed = runSpeed;
+                StartCoroutine(IncreaseSpeed());
                 availableActions = HandleMovement;
                 break;
 
@@ -94,7 +98,9 @@ public class PlayerManager : MonoBehaviour, IHasHealth
                 break;
 
             case state.AIMING:
-                moveSpeed = aimingSpeed;
+                StopCoroutine(IncreaseSpeed());
+                targetMoveSpeed = aimingSpeed;
+                StartCoroutine(DecreaseSpeed());
                 availableActions = HandleMovement;
                 break;
             case state.COOLDOWNING:
@@ -136,7 +142,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
 
         moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
-        CharacterMove(moveDir, moveSpeed, collideWith);
+        CharacterMove(moveDir, actualMoveSpeed, collideWith);
         CanDash();
     }
 
@@ -175,6 +181,24 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     public IHasHealth GetIHasHealth()
     {
         return this;
+    }
+
+
+    IEnumerator IncreaseSpeed()
+    {
+        for (float actualMoveSpeed = this.actualMoveSpeed; actualMoveSpeed < targetMoveSpeed; actualMoveSpeed += speedChangeSpeed * 0.1f)
+        {
+            this.actualMoveSpeed = actualMoveSpeed;
+            yield return null;
+        }
+    }
+    IEnumerator DecreaseSpeed()
+    {
+        for (float actualMoveSpeed = this.actualMoveSpeed; actualMoveSpeed < targetMoveSpeed; actualMoveSpeed -= speedChangeSpeed * 0.1f)
+        {
+            this.actualMoveSpeed = actualMoveSpeed;
+            yield return null;
+        }
     }
 
     private void CharacterMove(Vector2 inputVector, float moveSpeed, LayerMask UndashableLayer)
