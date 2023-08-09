@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class PracticeDummy : MonoBehaviour, IHasHealth
 {
-    [SerializeField] private float health = 100f;
+    [SerializeField] private float health = 100f, despawnTimer;
     [SerializeField] private GameObject alivePrefab, deadPrefab;
     private Transform playerPos;
     private CapsuleCollider capsuleCollider;
@@ -17,12 +17,12 @@ public class PracticeDummy : MonoBehaviour, IHasHealth
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     private void Start()
     {
         //playerPos = DATA.Instance.player.transform;
-        capsuleCollider = GetComponent<CapsuleCollider>();
         StartCoroutine(FollowPlayer());
     }
     private void Update()
@@ -32,8 +32,9 @@ public class PracticeDummy : MonoBehaviour, IHasHealth
             alivePrefab.SetActive(false);
             deadPrefab.SetActive(true);
             StopAllCoroutines();
+            agent.enabled = false;
             capsuleCollider.enabled = false;
-            Invoke("DestroySelf", 4);
+            Invoke("DestroySelf", despawnTimer);
 
         }
     }

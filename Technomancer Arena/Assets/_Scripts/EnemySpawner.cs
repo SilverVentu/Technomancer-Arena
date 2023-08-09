@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private GameObject enemyToSpawn;
     [SerializeField] private float spawnRate;
+    [SerializeField] private Transform[] spawnPoints;
     private Transform playerPos;
 
     private void Start()
@@ -19,7 +20,7 @@ public class EnemySpawner : MonoBehaviour
 
         while (enabled)
         {
-            GameObject enemySpawned = Instantiate(enemyToSpawn);
+            GameObject enemySpawned = Instantiate(enemyToSpawn, spawnPoints[Random.Range(0, spawnPoints.Length-1)].position, Quaternion.identity);
             enemySpawned.GetComponent<PracticeDummy>().SetPlayer(playerPos);
 
 

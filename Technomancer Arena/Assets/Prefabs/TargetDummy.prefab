@@ -24782,6 +24782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 40
+  despawnTimer: 7
   alivePrefab: {fileID: 7461765095618315440}
   deadPrefab: {fileID: 2865437031034618198}
 --- !u!54 &714925003545158216
@@ -24824,7 +24825,7 @@ NavMeshAgent:
   m_Speed: 3
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 100
+  m_AngularSpeed: 200
   m_StoppingDistance: 4.2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -26280,7 +26281,7 @@ ParticleSystem:
       maxColor: {r: 1, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
-        key0: {r: 1, g: 0.6775024, b: 0.05098039, a: 1}
+        key0: {r: 1, g: 0.08097593, b: 0.05098039, a: 1}
         key1: {r: 0.4528302, g: 0.21675722, b: 0, a: 0}
         key2: {r: 0, g: 0, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
@@ -29749,7 +29750,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: cfdf0e1a5cf17534c91e09889a4621ad, type: 2}
+  - {fileID: 2100000, guid: 336b42aca570ea0429f9a9342bec500f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -30300,7 +30301,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c010cffdb1571064ea426f90790dc3f9,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5922091271323791252}
   m_SourcePrefab: {fileID: 100100000, guid: c010cffdb1571064ea426f90790dc3f9, type: 3}
 --- !u!1 &7461765095618315440 stripped
 GameObject:
@@ -30308,6 +30313,27 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 7731811962747632097}
   m_PrefabAsset: {fileID: 0}
+--- !u!95 &5922091271323791252
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7461765095618315440}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d6a03c760b1939e4cb9a47c2e3eb8733, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &7838044004717256202 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c010cffdb1571064ea426f90790dc3f9,
