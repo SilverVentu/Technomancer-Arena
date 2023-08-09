@@ -9,13 +9,14 @@ using static GunDroneControllerOLD;
 public class GunDroneController : MonoBehaviour
 {
     [SerializeField] private Transform[] dronePosition;
-    [SerializeField] private float droneRotSpeed;
+    [SerializeField] private float aimAssistRadius, droneRotSpeed;
     [SerializeField] private LayerMask targetsLayer;
     [SerializeField] private GunDroneSO gunDroneSO;
     [SerializeField] private List<GameObject> targets = new List<GameObject>();
-   
-    
+
+
     private Collider[] nearbyEnemies;
+    private Collider[] pointerNearbyEnemies;
     private Transform targetPosition;
     private float fireRate;
     private Vector3 gizmoPosition;
@@ -88,15 +89,22 @@ public class GunDroneController : MonoBehaviour
     }
     private void HandleDroneAim()
     {
-        
-        Vector3 mousePositionDirection = mousePosition.GetPointerTransform().position - targetPosition.position;
+
+        pointerNearbyEnemies = Physics.OverlapSphere(mousePosition.GetPointerTransform().position, aimAssistRadius, targetsLayer);
+
+        Vector3 assistedMousePosition = Vector3.Lerp(GetAveragePosition(pointerNearbyEnemies), mousePosition.GetPointerTransform().position, .5f);
+
+        Vector3 mousePositionDirection = assistedMousePosition - targetPosition.position;
 
         // this normalices the position of the mouse, then adds the position of the drone and substracts its height
         Vector3 aimDirection = mousePositionDirection.normalized + transform.position;
         transform.position = mousePositionDirection.normalized + targetPosition.position;
-        transform.forward = Vector3.Slerp(transform.forward, mousePosition.GetPointerTransform().position - transform.position, droneRotSpeed * Time.deltaTime);
-        //transform.LookAt(mousePosition.GetPointerTransform().position);
-        gizmoPosition = mousePositionDirection.normalized + dronePosition[1].localPosition;
+
+
+
+        transform.forward = Vector3.Slerp(transform.forward, assistedMousePosition - transform.position, droneRotSpeed * Time.deltaTime);
+        
+        gizmoPosition = GetAveragePosition(pointerNearbyEnemies)/*mousePositionDirection.normalized + dronePosition[1].localPosition*/;
     }
 
     private void HandleDroneIdle()
@@ -108,7 +116,7 @@ public class GunDroneController : MonoBehaviour
 
         Collider target = nearbyEnemies[0];
 
-        for(int i = 0; i < nearbyEnemies.Length; i++)
+        for (int i = 0; i < nearbyEnemies.Length; i++)
         {
             if (nearbyEnemies[i].gameObject.layer == 7)
             {
@@ -150,19 +158,38 @@ public class GunDroneController : MonoBehaviour
         {
             if (fireRate >= gunDroneSO.fireRate)
             {
-                OnShot?.Invoke(this, new OnHitEventArgs { hitPosition = (transform.forward * gunDroneSO.range)+ transform.localPosition });
+                OnShot?.Invoke(this, new OnHitEventArgs { hitPosition = (transform.forward * gunDroneSO.range) + transform.localPosition });
                 fireRate = 0;
 
             }
         }
     }
 
+    private Vector3 GetAveragePosition(Collider[] entries)
+    {
+        if (entries.Length == 0)
+        {
+            return mousePosition.GetPointerTransform().position;
+        }
+
+        var bounds = new Bounds(entries[0].transform.position, Vector3.zero);
+        
+        foreach (var entry in entries)
+        {
+            bounds.Encapsulate(entry.transform.position);
+        }
+
+        return bounds.center;
+    }
+
 
     /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(gizmoPosition, 1.5f);
         Gizmos.DrawWireSphere(targetPosition.position, gunDroneSO.range);
+        Gizmos.DrawWireSphere(mousePosition.GetPointerTransform().position, aimAssistRadius);
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(gizmoPosition, 1.5f);
     }*/
- 
+
 }
