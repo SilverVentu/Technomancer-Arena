@@ -1,24 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.UIElements;
 using UnityEngine;
 using static GunDroneControllerOLD;
 
 public class GunDroneController : MonoBehaviour
 {
     [SerializeField] private Transform[] dronePosition;
+    [SerializeField] private Transform playerPosition;
     [SerializeField] private float aimAssistRadius, droneRotSpeed;
     [SerializeField] private LayerMask targetsLayer;
     [SerializeField] private GunDroneSO gunDroneSO;
     [SerializeField] private List<GameObject> targets = new List<GameObject>();
 
 
-    private Collider[] nearbyEnemies;
-    private Collider[] pointerNearbyEnemies;
+    private Collider[] nearbyEnemies, pointerNearbyEnemies;
+    private Collider target;
     private Transform targetPosition;
-    private float fireRate;
+    private float fireRate, currentCharacterDistance, targetedCharacterDistance;
     private Vector3 gizmoPosition;
     private InputManager inputManager;
     private MousePosition mousePosition;
@@ -61,6 +60,11 @@ public class GunDroneController : MonoBehaviour
     {
         IDLE,
         AIMING,
+    }
+    private enum idleState
+    {
+        NOENEMIESNEAR,
+        ENEMIESNEAR,
     }
 
     private void Update()
@@ -112,25 +116,40 @@ public class GunDroneController : MonoBehaviour
         transform.forward = transform.forward;
         nearbyEnemies = Physics.OverlapSphere(targetPosition.position, gunDroneSO.range, targetsLayer);
 
-        if (nearbyEnemies.Length == 0) return;
 
-        Collider target = nearbyEnemies[0];
+        //target = nearbyEnemies[0];
+        if (nearbyEnemies.Length == 0)
+        {
+            currentCharacterDistance = 0;
+            targetedCharacterDistance = gunDroneSO.range;
+
+            return;
+        }
 
         for (int i = 0; i < nearbyEnemies.Length; i++)
         {
-            if (nearbyEnemies[i].gameObject.layer == 7)
+            /*if (nearbyEnemies[i].gameObject.layer == 7)
             {
                 target = nearbyEnemies[i];
                 break;
-            }
+            }*/
 
-            float currentCharacter = Vector3.Distance(nearbyEnemies[i].transform.position, dronePosition[1].localPosition);
-            float targetedCharacter = Vector3.Distance(target.transform.position, dronePosition[1].localPosition);
+            
 
-            if (currentCharacter <= targetedCharacter)
+            currentCharacterDistance = Vector3.Distance(nearbyEnemies[i].transform.position, playerPosition.position);
+            
+            if (currentCharacterDistance <= targetedCharacterDistance)
             {
+                Debug.Log("new target");
                 target = nearbyEnemies[i];
             }
+            else
+            {
+
+                break;
+            }
+
+            targetedCharacterDistance = Vector3.Distance(target.transform.position, playerPosition.position);
 
         }
         transform.forward = Vector3.Slerp(transform.forward, new Vector3(target.transform.position.x, 0, target.transform.position.z) - transform.position, gunDroneSO.aimingSpeed * Time.deltaTime);

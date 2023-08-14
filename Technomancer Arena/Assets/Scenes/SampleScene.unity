@@ -3674,6 +3674,7 @@ MonoBehaviour:
   dronePosition:
   - {fileID: 4033011679150577068}
   - {fileID: 2351447007498753109}
+  playerPosition: {fileID: 2351447007498753109}
   aimAssistRadius: 2.18
   droneRotSpeed: 20
   targetsLayer:
