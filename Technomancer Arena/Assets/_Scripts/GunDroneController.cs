@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using static GunDroneControllerOLD;
 
 public class GunDroneController : MonoBehaviour
 {
@@ -15,14 +15,20 @@ public class GunDroneController : MonoBehaviour
 
 
     private Collider[] nearbyEnemies, pointerNearbyEnemies;
-    private Collider target;
+    private Collider target, previousTarget;
     private Transform targetPosition;
     private float fireRate, currentCharacterDistance, targetedCharacterDistance;
-    private Vector3 gizmoPosition;
+    private Vector3 gizmoPosition, aimingStartPoint, aimingEndPoint;
     private InputManager inputManager;
     private MousePosition mousePosition;
     private delegate void AvailableDroneActions();
+    private bool isPressingShootButton = false;
+    private event EventHandler OnNewTarget;
 
+    public class OnHitEventArgs : EventArgs
+    {
+        public Vector3 hitPosition;
+    }
 
     public event EventHandler<OnHitEventArgs> OnShot;
 
@@ -32,17 +38,28 @@ public class GunDroneController : MonoBehaviour
     {
         inputManager = DATA.Instance.inputManager;
         mousePosition = DATA.Instance.mousePosition;
-        inputManager.OnPlayerAttack += InputManager_OnPlayerAttack;
+        inputManager.OnPlayerShoot += InputManager_OnPlayerShoot;
+        inputManager.OnPlayerStopShooting += InputManager_OnPlayerStopShooting;
         inputManager.OnTakeAim += InputManager_OnTakeAim;
         inputManager.OnLowerAim += InputManager_OnLowerAim;
+        OnNewTarget += GunDroneController_OnNewTarget;
         SetState(state.IDLE);
     }
 
-    private void InputManager_OnPlayerAttack(object sender, EventArgs e)
+    private void GunDroneController_OnNewTarget(object sender, EventArgs e)
     {
-        Shoot();
+        StartCoroutine(AimLinearlyTowards());
+    }
 
-        Debug.Log("PewPew");
+    private void InputManager_OnPlayerStopShooting(object sender, EventArgs e)
+    {
+        isPressingShootButton = false;
+    }
+
+    private void InputManager_OnPlayerShoot(object sender, EventArgs e)
+    {
+        isPressingShootButton = true;
+
     }
 
     private void InputManager_OnTakeAim(object sender, System.EventArgs e)
@@ -73,6 +90,10 @@ public class GunDroneController : MonoBehaviour
         transform.localPosition = targetPosition.position;
         availableDroneActions();
         fireRate += Time.deltaTime;
+        if (isPressingShootButton)
+        {
+            Shoot();
+        }
     }
 
     private void SetState(state state)
@@ -120,22 +141,15 @@ public class GunDroneController : MonoBehaviour
         //target = nearbyEnemies[0];
         if (nearbyEnemies.Length == 0)
         {
-            currentCharacterDistance = 0;
-            targetedCharacterDistance = gunDroneSO.range;
-
             return;
         }
 
+
+        currentCharacterDistance = 0;
+        targetedCharacterDistance = gunDroneSO.range;
+
         for (int i = 0; i < nearbyEnemies.Length; i++)
         {
-            /*if (nearbyEnemies[i].gameObject.layer == 7)
-            {
-                target = nearbyEnemies[i];
-                break;
-            }*/
-
-            
-
             currentCharacterDistance = Vector3.Distance(nearbyEnemies[i].transform.position, playerPosition.position);
             
             if (currentCharacterDistance <= targetedCharacterDistance)
@@ -143,16 +157,28 @@ public class GunDroneController : MonoBehaviour
                 Debug.Log("new target");
                 target = nearbyEnemies[i];
             }
-            else
-            {
 
-                break;
+            if (target != null)
+            {
+                float v = Vector3.Distance(target.transform.position, playerPosition.position);
+                targetedCharacterDistance = v;
             }
 
-            targetedCharacterDistance = Vector3.Distance(target.transform.position, playerPosition.position);
-
         }
-        transform.forward = Vector3.Slerp(transform.forward, new Vector3(target.transform.position.x, 0, target.transform.position.z) - transform.position, gunDroneSO.aimingSpeed * Time.deltaTime);
+
+        if (target == null)
+        { 
+            return;
+        }
+        else if(target != previousTarget)
+        {
+            previousTarget = target;
+            Debug.Log("New Target Acquired");
+            aimingStartPoint = transform.forward - transform.position;
+            aimingEndPoint = new Vector3(target.transform.position.x, 0, target.transform.position.z) - transform.position;
+            OnNewTarget?.Invoke(this, EventArgs.Empty);            
+        }
+        
     }
 
 
@@ -199,6 +225,19 @@ public class GunDroneController : MonoBehaviour
         }
 
         return bounds.center;
+    }
+
+    private IEnumerator AimLinearlyTowards()
+    {
+        for (float currentPos = 0f; currentPos < 1; currentPos += gunDroneSO.aimingSpeed * Time.deltaTime)
+        {
+            transform.forward = Vector3.Slerp(aimingStartPoint, aimingEndPoint, currentPos);
+            Debug.Log("aiming");
+
+            yield return null;
+        }
+        Debug.Log("Broke");
+        yield break;
     }
 
 

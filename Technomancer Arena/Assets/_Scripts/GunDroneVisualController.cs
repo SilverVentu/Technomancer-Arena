@@ -32,12 +32,13 @@ public class GunDroneVisualController : MonoBehaviour
 
     }
 
-    private void GunDroneController_OnShot(object sender, GunDroneControllerOLD.OnHitEventArgs e)
+    private void GunDroneController_OnShot(object sender, GunDroneController.OnHitEventArgs e)
     {
         hitFX.transform.position = e.hitPosition + hitFXOffset;
         hitFXParticles.Play();
         gunDroneAnimator.SetTrigger("Shoot");
     }
+
     
 
 

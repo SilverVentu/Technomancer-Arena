@@ -14,6 +14,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     [SerializeField] private GunDroneOptions equipedGunDrone;
     [SerializeField] private Transform gunDroneAnchorPoint;
     [SerializeField] private state currentState, previosState;
+    [SerializeField] private GameObject playerVisual;
 
     private InputManager inputManager;
     private bool isWalking;
@@ -67,6 +68,7 @@ public class PlayerManager : MonoBehaviour, IHasHealth
         {
             dashOrigin = transform.position;
             SetState(state.DASHING);
+            playerVisual.GetComponent<Animator>().SetTrigger("Dashing");
         }
     }
 
@@ -138,6 +140,16 @@ public class PlayerManager : MonoBehaviour, IHasHealth
     private void HandleMovement()
     {
         Vector2 inputVector = inputManager.GetKeyboardMovementVectorNormalized();
+
+        if (inputVector == Vector2.zero)
+        {
+            playerVisual.GetComponent<Animator>().SetBool("IsRunning", false);
+        }
+        else
+        {
+
+            playerVisual.GetComponent<Animator>().SetBool("IsRunning", true);
+        }
 
         moveDir = new Vector3(inputVector.x, 0f, inputVector.y);
 
