@@ -24,4 +24,5 @@ public class DATA : MonoBehaviour
     public Transform gunDroneAnchorPoint;
     public Camera mainCam;
     public GameObject player;
+    public MapControlManager mapControlManager;
 }
