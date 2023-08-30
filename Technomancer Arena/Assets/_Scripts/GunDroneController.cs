@@ -137,48 +137,28 @@ public class GunDroneController : MonoBehaviour
         transform.forward = transform.forward;
         nearbyEnemies = Physics.OverlapSphere(targetPosition.position, gunDroneSO.range, targetsLayer);
 
+        if (nearbyEnemies.Length == 0) return;
 
-        //target = nearbyEnemies[0];
-        if (nearbyEnemies.Length == 0)
-        {
-            return;
-        }
-
-
-        currentCharacterDistance = 0;
-        targetedCharacterDistance = gunDroneSO.range;
+        Collider target = nearbyEnemies[0];
 
         for (int i = 0; i < nearbyEnemies.Length; i++)
         {
-            currentCharacterDistance = Vector3.Distance(nearbyEnemies[i].transform.position, playerPosition.position);
-            
-            if (currentCharacterDistance <= targetedCharacterDistance)
+            if (nearbyEnemies[i].gameObject.layer == 7)
             {
-                Debug.Log("new target");
+                target = nearbyEnemies[i];
+                break;
+            }
+
+            float currentCharacter = Vector3.Distance(nearbyEnemies[i].transform.position, dronePosition[1].localPosition);
+            float targetedCharacter = Vector3.Distance(target.transform.position, dronePosition[1].localPosition);
+
+            if (currentCharacter <= targetedCharacter)
+            {
                 target = nearbyEnemies[i];
             }
 
-            if (target != null)
-            {
-                float v = Vector3.Distance(target.transform.position, playerPosition.position);
-                targetedCharacterDistance = v;
-            }
-
         }
-
-        if (target == null)
-        { 
-            return;
-        }
-        else if(target != previousTarget)
-        {
-            previousTarget = target;
-            Debug.Log("New Target Acquired");
-            aimingStartPoint = transform.forward - transform.position;
-            aimingEndPoint = new Vector3(target.transform.position.x, 0, target.transform.position.z) - transform.position;
-            OnNewTarget?.Invoke(this, EventArgs.Empty);            
-        }
-        
+        transform.forward = Vector3.Slerp(transform.forward, new Vector3(target.transform.position.x, 0, target.transform.position.z) - transform.position, gunDroneSO.aimingSpeed * Time.deltaTime);
     }
 
 

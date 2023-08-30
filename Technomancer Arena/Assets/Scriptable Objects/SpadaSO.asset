@@ -21,6 +21,6 @@ MonoBehaviour:
     m_Bits: 3200
   damage: 20
   fireRate: 0.1
-  aimingSpeed: 1
+  aimingSpeed: 5
   range: 8
   shootHitboxRadius: 0.5
