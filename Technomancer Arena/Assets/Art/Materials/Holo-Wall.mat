@@ -37,6 +37,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Emission_mask:
+        m_Texture: {fileID: 2800000, guid: c57042cbcedab0147b29446ceac0a794, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Gradient:
         m_Texture: {fileID: 2800000, guid: f6ee588ece2dafc4cac1db0c68019981, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -62,12 +66,15 @@ Material:
     - _Float: 0
     - _Fresnel_threshold: 0.621
     - _Gradient_offset: 1.27
+    - _Has_emission_map: 0
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Spread: 0.1
     - _Texture_influence: 0.99
     - _gradient_offset: 0.7
     m_Colors:
-    - _DarkColor: {r: 0.5883757, g: 0.7925348, b: 0.9536364, a: 0}
-    - _Light_Color: {r: 0.9603058, g: 1.6055586, b: 1.5175534, a: 1}
+    - _DarkColor: {r: 4.7070055, g: 6.3402786, b: 7.6290913, a: 0}
+    - _Emission_color: {r: 1.8304561, g: 2.9427793, b: 4.9245777, a: 0}
+    - _Light_Color: {r: 4.729101, g: 7.906699, b: 7.4733105, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

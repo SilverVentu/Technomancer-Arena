@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1402080437132177203}
   - component: {fileID: 6347669065663926822}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Decal Projector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 8098372495475387873}
   - component: {fileID: 5315358273875639275}
   - component: {fileID: 5519040465730068996}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: CapturePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -267,6 +267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3887185075125053422, guid: 59109c82f15d5b2478fb2886f1430ec3,
         type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b74bad9425e41544ca294ada8190031f, type: 2}
+    - target: {fileID: -3887185075125053422, guid: 59109c82f15d5b2478fb2886f1430ec3,
+        type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[0]
       value: 100
       objectReference: {fileID: 0}
@@ -274,6 +279,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: CapturePointVisual
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 59109c82f15d5b2478fb2886f1430ec3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 13
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
