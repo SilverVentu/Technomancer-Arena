@@ -64,17 +64,17 @@ Material:
     m_Ints: []
     m_Floats:
     - _Float: 0
-    - _Fresnel_threshold: 0.621
+    - _Fresnel_threshold: 0.513
     - _Gradient_offset: 1.27
-    - _Has_emission_map: 0
+    - _Has_emission_map: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Spread: 0.1
-    - _Texture_influence: 0.99
+    - _Spread: 0.49
+    - _Texture_influence: 1.58
     - _gradient_offset: 0.7
     m_Colors:
-    - _DarkColor: {r: 4.7070055, g: 6.3402786, b: 7.6290913, a: 0}
-    - _Emission_color: {r: 1.8304561, g: 2.9427793, b: 4.9245777, a: 0}
-    - _Light_Color: {r: 4.729101, g: 7.906699, b: 7.4733105, a: 1}
+    - _DarkColor: {r: 0.19355756, g: 0.20195389, b: 0.20850712, a: 0}
+    - _Emission_color: {r: 0.48029897, g: 0.48029897, b: 0.48029897, a: 0}
+    - _Light_Color: {r: 0.9439586, g: 1.0273061, b: 1.0163393, a: 1}
     - _Tiling: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
